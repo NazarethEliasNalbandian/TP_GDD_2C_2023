@@ -13,7 +13,7 @@ GO
 
 /* 
  * TABLE: agente 
- */
+*/
 
 CREATE TABLE SQLSQUAD.agente(
     AGENTE_CODIGO             numeric(18, 0)    IDENTITY(1,1),
@@ -525,8 +525,6 @@ CREATE TABLE SQLSQUAD.pago_venta(
 )
 go
 
-
-
 IF OBJECT_ID('SQLSQUAD.pago_venta') IS NOT NULL
     PRINT '<<< CREATED TABLE pago_venta >>>'
 ELSE
@@ -959,6 +957,7 @@ BEGIN
     RETURN @nombreCalle + ' ' + CAST(@numeroCalle AS nvarchar(100))
 END
 
+
 --------------------------------------
 ------------ PROCEDURES --------------
 --------------------------------------
@@ -1235,8 +1234,6 @@ BEGIN
 END
 GO
 
---caracteristica
-
 CREATE PROCEDURE SQLSQUAD.MigrarDatosCaracteristica
 AS
 BEGIN
@@ -1489,6 +1486,5 @@ BEGIN TRANSACTION
 	EXEC SQLSQUAD.MigrarDatosDetalleAlquiler
 	EXEC SQLSQUAD.MigrarDatosInquilinoAlquiler
 COMMIT TRANSACTION
-
 
 
