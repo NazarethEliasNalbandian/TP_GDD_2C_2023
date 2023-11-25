@@ -10,27 +10,27 @@ GO
  * TABLE: Alquiler 
  */
 
-CREATE TABLE SQLSQUAD.BI_Alquiler(
-    ALQUILER_TIEMPO_ID            numeric(18, 0)    NOT NULL,
-    ALQUILER_UBICACION_ID         numeric(18, 0)    NOT NULL,
-    ALQUILER_RANGO_M2_ID          numeric(18, 0)    NOT NULL,
-    ALQUILER_TIPO_INMUEBLE_ID     numeric(18, 0)    NOT NULL,
-    ALQUILER_TIPO_OPERACION_ID    numeric(18, 0)    NOT NULL,
-    ALQUILER_TIPO_MONEDA_ID       numeric(18, 0)    NOT NULL,
-    ALQUILER_AMBIENTES_ID         numeric(18, 0)    NOT NULL,
-    ALQUILER_RANGO_ETARIO_ID      numeric(18, 0)    NOT NULL,
-    ALQUILER_SUCURSAL_CODIGO      numeric(18, 0)    NOT NULL,
-    ALQUILER_PAGO_ID              numeric(18, 0)    NOT NULL,
-    CONSTRAINT PK_ALQ PRIMARY KEY NONCLUSTERED (ALQUILER_TIEMPO_ID, ALQUILER_UBICACION_ID, ALQUILER_RANGO_M2_ID, ALQUILER_TIPO_INMUEBLE_ID, ALQUILER_TIPO_OPERACION_ID, ALQUILER_TIPO_MONEDA_ID, ALQUILER_AMBIENTES_ID, ALQUILER_RANGO_ETARIO_ID, ALQUILER_SUCURSAL_CODIGO, ALQUILER_PAGO_ID)
+CREATE TABLE SQLSQUAD.BI_Alquiler(
+    ALQUILER_TIEMPO_ID            numeric(18, 0)    NOT NULL,
+    ALQUILER_UBICACION_ID         numeric(18, 0)    NOT NULL,
+    ALQUILER_RANGO_M2_ID          numeric(18, 0)    NOT NULL,
+    ALQUILER_TIPO_INMUEBLE_ID     numeric(18, 0)    NOT NULL,
+    ALQUILER_TIPO_OPERACION_ID    numeric(18, 0)    NOT NULL,
+    ALQUILER_TIPO_MONEDA_ID       numeric(18, 0)    NOT NULL,
+    ALQUILER_AMBIENTES_ID         numeric(18, 0)    NOT NULL,
+    ALQUILER_RANGO_ETARIO_ID      numeric(18, 0)    NOT NULL,
+    ALQUILER_SUCURSAL_CODIGO      numeric(18, 0)    NOT NULL,
+    ALQUILER_PAGO_ID              numeric(18, 0)    NOT NULL,
+    CONSTRAINT PK_ALQ PRIMARY KEY NONCLUSTERED (ALQUILER_TIEMPO_ID, ALQUILER_UBICACION_ID, ALQUILER_RANGO_M2_ID, ALQUILER_TIPO_INMUEBLE_ID, ALQUILER_TIPO_OPERACION_ID, ALQUILER_TIPO_MONEDA_ID, ALQUILER_AMBIENTES_ID, ALQUILER_RANGO_ETARIO_ID, ALQUILER_SUCURSAL_CODIGO, ALQUILER_PAGO_ID)
 )
 go
 
 
 
-IF OBJECT_ID('SQLSQUAD.BI_Alquiler') IS NOT NULL
-    PRINT '<<< CREATED TABLE SQLSQUAD.BI_Alquiler >>>'
-ELSE
-    PRINT '<<< FAILED CREATING TABLE SQLSQUAD.BI_Alquiler >>>'
+IF OBJECT_ID('SQLSQUAD.BI_Alquiler') IS NOT NULL
+    PRINT '<<< CREATED TABLE SQLSQUAD.BI_Alquiler >>>'
+ELSE
+    PRINT '<<< FAILED CREATING TABLE SQLSQUAD.BI_Alquiler >>>'
 go
 
 /* 
@@ -83,7 +83,7 @@ go
  */
 
 CREATE TABLE SQLSQUAD.BI_Pago(
-    PAGO_ID                   numeric(18, 0)    NOT NULL,
+    PAGO_ID                   numeric(18, 0)   IDENTITY(1,1),
     PAGO_FECHA_VENCIMIENTO    date              NULL,
     PAGO_FECHA                date              NULL,
     CONSTRAINT PK_PAGO PRIMARY KEY NONCLUSTERED (PAGO_ID)
@@ -103,7 +103,7 @@ go
  */
 
 CREATE TABLE SQLSQUAD.BI_Rango_Etario(
-    RANGO_ETARIO_ID    numeric(18, 0)    NOT NULL,
+    RANGO_ETARIO_ID    numeric(18, 0)    IDENTITY(1,1),
     MENOR_A_25         bit               NULL,
     MAYOR_A_55         bit               NULL,
     ENTRE_35_Y_50      bit               NULL,
@@ -125,7 +125,7 @@ go
  */
 
 CREATE TABLE SQLSQUAD.BI_Rango_m2(
-    RANGO_M2_ID       numeric(18, 0)    NOT NULL,
+    RANGO_M2_ID       numeric(18, 0)    IDENTITY(1,1),
     MAYOR_A_100       bit               NULL,
     ENTRE_75_Y_100    bit               NULL,
     ENTRE_55_75       bit               NOT NULL,
@@ -169,7 +169,7 @@ go
  */
 
 CREATE TABLE SQLSQUAD.BI_Tiempo(
-    TIEMPO_ID              numeric(18, 0)    NOT NULL,
+    TIEMPO_ID              numeric(18, 0)    IDENTITY(1,1),
     TIEMPO_MES             int               NULL,
     TIEMPO_CUATRIMESTRE    int               NULL,
     TIEMPO_AÑO             int               NULL,
@@ -248,7 +248,7 @@ go
  */
 
 CREATE TABLE SQLSQUAD.BI_Ubicacion(
-    UBICACION_ID            numeric(18, 0)    NOT NULL,
+    UBICACION_ID            numeric(18, 0)    IDENTITY(1,1),
     UBICACION_BARRIO        nvarchar(100)     NULL,
     UBICACION_LOCALIDAD     nvarchar(100)     NULL,
     UBICACION_PROVINICIA    nvarchar(100)     NULL,
@@ -457,6 +457,7 @@ BEGIN
 						 END)
 END
 
+GO
 CREATE FUNCTION SQLSQUAD.mayorA100(@superficie numeric(18,2))
 RETURNS int
 BEGIN
@@ -466,7 +467,45 @@ BEGIN
 	 RETURN 0
 END
 
+GO
+CREATE FUNCTION SQLSQUAD.entre75Y100(@superficie numeric(18,2))
+RETURNS int
+BEGIN
+     IF @superficie >= 75 AND @superficie < 100
+		RETURN 1
+	  
+	 RETURN 0
+END
 
+GO
+CREATE FUNCTION SQLSQUAD.entre55Y75(@superficie numeric(18,2))
+RETURNS int
+BEGIN
+     IF @superficie >= 55 AND @superficie < 75
+		RETURN 1
+	  
+	 RETURN 0
+END
+
+GO
+CREATE FUNCTION SQLSQUAD.entre35Y55(@superficie numeric(18,2))
+RETURNS int
+BEGIN
+     IF @superficie >= 35 AND @superficie < 55
+		RETURN 1
+	  
+	 RETURN 0
+END
+GO
+CREATE FUNCTION SQLSQUAD.menorA35(@superficie numeric(18,2))
+RETURNS int
+BEGIN
+     IF @superficie < 35
+		RETURN 1
+	  
+	 RETURN 0
+END
+GO
 -------------------------- PROCEDIMIENTOS ----------------------------
 
 
@@ -478,13 +517,22 @@ BEGIN
     FROM SQLSQUAD.tipo_operacion TIP_OP
 END
 
+GO
 CREATE PROCEDURE MigrarDatosBI_Rango_m2
 AS
 BEGIN
 	 INSERT INTO SQLSQUAD.BI_Rango_m2(MAYOR_A_100, ENTRE_75_Y_100, ENTRE_55_75, ENTRE_35_Y_55, MENOR_A_35)
-	 SELECT SQLSQUAD.mayorA100(SUPERFICIE_TOTAL), SUPERFICIE_TOTAL, SUPERFICIE_TOTAL, SUPERFICIE_TOTAL, SUPERFICIE_TOTAL FROM SQLSQUAD.inmueble
+	 SELECT SQLSQUAD.mayorA100(INMUEBLE_SUPERFICIETOTAL), SQLSQUAD.entre75Y100(INMUEBLE_SUPERFICIETOTAL), SQLSQUAD.entre55Y75(INMUEBLE_SUPERFICIETOTAL), SQLSQUAD.entre35Y55(INMUEBLE_SUPERFICIETOTAL), SQLSQUAD.menorA35(INMUEBLE_SUPERFICIETOTAL) FROM SQLSQUAD.inmueble
 END
 
+GO
+CREATE PROCEDURE MigrarDatosBI_Tipo_Moneda
+AS
+BEGIN
+	INSERT INTO SQLSQUAD.BI_Tipo_Moneda(TIPO_MONEDA_ID, TIPO_MONEDA_NOMBRE)
+    SELECT  TIP_MON.MONEDA_ID, TIP_MON.MONEDA_NOMBRE
+    FROM SQLSQUAD.moneda TIP_MON
+END
 
 --1. Duración promedio (en días) que se encuentran publicados los anuncios
 --según el tipo de operación (alquiler, venta, etc), barrio y ambientes para cada
