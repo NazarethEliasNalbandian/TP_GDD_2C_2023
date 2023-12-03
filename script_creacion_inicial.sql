@@ -46,7 +46,6 @@ CREATE TABLE SQLSQUAD.alquiler(
     ALQUILER_GASTOS_AVERIGUA    numeric(18, 2)    NULL,
     ALQUILER_COMISION           numeric(18, 2)    NULL,
     ALQUILER_DEPOSITO           numeric(18, 2)    NULL,
-    ALQUILER_DETALLE            numeric(18, 0)    NULL,
     ALQUILER_CANT_PERIODOS      numeric(18, 0)    NULL,
     ALQUILER_FECHA_FIN          datetime          NULL,
     ALQUILER_FECHA_INICIO       datetime          NOT NULL,
